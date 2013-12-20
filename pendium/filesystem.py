@@ -262,7 +262,7 @@ class WikiFile(WikiPath):
 
         self._content = content
 
-    def save(self):
+    def save(self, comment=None):
         fp = codecs.open(self.abs_path, 'w', 'utf-8')
         fp.write(self._content)
         fp.close()
