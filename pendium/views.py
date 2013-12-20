@@ -158,12 +158,14 @@ def edit(path):
         abort(500)
 
     content = p.content()
-    if request.form.get('save', None):
+    if request.form.get('save', request.form.get('save_and_edit',None)):
         content = request.form.get('content')
         try:
             p.content(content, comment=request.form.get('message', None))
             p.save()
             flash("File saved with the new provided content", 'success')
+            if request.form.get('save_and_edit', None ):
+                return redirect(url_for('edit', path=path))
             return redirect(url_for('view', path=path))
         except Exception, e:
             app.logger.error(traceback.format_exc())
